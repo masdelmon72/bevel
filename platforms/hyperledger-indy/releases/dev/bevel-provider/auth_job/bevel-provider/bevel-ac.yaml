@@ -1,0 +1,35 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: bevel-provider-bevel-ac-auth-job
+  annotations:
+    fluxcd.io/automated: "false"
+  namespace: bevel-provider-ns
+spec:
+  releaseName: bevel-provider-bevel-ac-auth-job
+  chart:
+    path: platforms/hyperledger-indy/charts/indy-auth-job
+    git: https://github.com/masdelmon72/bevel.git
+    ref: develop
+  values:
+    metadata:
+      name: bevel-provider-bevel-ac-auth-job
+      namespace: bevel-provider-ns
+    network:
+      name: bevel
+      kubernetes_url: https://192.168.49.2:8443
+    image:
+      name: bevel-provider
+      repository: alpine:3.9.4
+    vault:
+      address: http://192.168.49.2:32000
+      identity: bevel-ac
+      admin_auth_path: kubernetes-bevel-provider-admin-auth
+      policy: bevel-provider-bevel-ac-ro
+      policy_content: path \"/bevel-provider/data/+/+/+/public*\" { capabilities = [ \"read\", \"list\" ] }
+      auth_path: kubernetes-bevel-provider-bevel-ac-auth
+    account:
+      admin_service: bevel-provider-admin-vault-auth
+      admin_role: rw
+      service: bevel-provider-bevel-ac-vault-auth
+      role: ro
