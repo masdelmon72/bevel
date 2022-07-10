@@ -1,0 +1,35 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: bevel-dzamba-partner-partner-endorser-auth-job
+  annotations:
+    fluxcd.io/automated: "false"
+  namespace: bevel-dzamba-partner-ns
+spec:
+  releaseName: bevel-dzamba-partner-partner-endorser-auth-job
+  chart:
+    path: platforms/hyperledger-indy/charts/indy-auth-job
+    git: ssh://github.com/masdelmon72/bevel.git
+    ref: develop
+  values:
+    metadata:
+      name: bevel-dzamba-partner-partner-endorser-auth-job
+      namespace: bevel-dzamba-partner-ns
+    network:
+      name: bevel
+      kubernetes_url: https://192.168.49.2:8443
+    image:
+      name: bevel-dzamba-partner
+      repository: alpine:3.9.4
+    vault:
+      address: http://192.168.49.2:32000
+      identity: partner-endorser
+      admin_auth_path: kubernetes-bevel-dzamba-partner-admin-auth
+      policy: bevel-dzamba-partner-partner-endorser-ro
+      policy_content: path \"/bevel-dzamba-partner/data/endorsers/partner-endorser/*\" { capabilities = [ \"read\", \"list\" ] }
+      auth_path: kubernetes-bevel-dzamba-partner-partner-endorser-auth
+    account:
+      admin_service: bevel-dzamba-partner-admin-vault-auth
+      admin_role: rw
+      service: bevel-dzamba-partner-partner-endorser-vault-auth
+      role: ro
