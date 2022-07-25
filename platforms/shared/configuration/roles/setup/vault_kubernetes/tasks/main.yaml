@@ -12,7 +12,7 @@
 # Check if namespace created
 - name: "Waiting for the namespace {{ component_ns }} to be created"
   include_role:
-    name: "{{ playbook _dir }}/../../shared/configuration/roles/check/k8_component"
+    name: "{{ lookup('vars', 'playbook' ~ _dir) }}/../../shared/configuration/roles/check/k8_component"
   vars:
     component_type: "Namespace"
     component_name: "{{ component_ns }}"
