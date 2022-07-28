@@ -24,7 +24,7 @@ spec:
 
     vault:
       role: vault-role
-      address: http://10.100.181.78:32000
+      address: http://10.100.181.78:8200
       authpath: devsupplychain-net-auth
       secretcryptoprefix: secretsv2/data/crypto/ordererOrganizations/supplychain-net/ca
       secretcredentialsprefix: secretsv2/data/credentials/supplychain-net/ca/supplychain
