@@ -24,8 +24,8 @@ spec:
     vault:
       reviewer_service: vault-reviewer
       role: vault-role
-      address: http://10.100.181.78:8200
-      authpath: prodstore-net-auth
+      address: http://10.100.181.78:32000
+      authpath: devstore-net-auth
       policy: vault-crypto-peer-store-net-ro
       secret_path: secretsv2
       serviceaccountname: vault-auth
